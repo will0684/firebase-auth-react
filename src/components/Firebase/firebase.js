@@ -18,8 +18,10 @@ var prodConfig = {
   messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER
 };
 
+// The Node environment is checked for production or development mode and the correct Firebase config is selected
 const config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
 
+// Firebase class can be instantiated once and then passed to multiple components
 class Firebase {
   constructor() {
     app.initializeApp(config);
