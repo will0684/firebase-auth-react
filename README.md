@@ -1,5 +1,12 @@
 # Practice App for Firebase Auth + React
 
+This code is to help us get familiar with these concepts:
+
+- How to use FirebaseUI for Auth
+- The FirebaseAuth flow
+- How user roles can be utilized to control routing
+- REACT_APP .env variables for development and production environments
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
