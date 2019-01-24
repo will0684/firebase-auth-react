@@ -4,6 +4,8 @@ import { Link, withRouter } from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { FirebaseContext } from '../Firebase';
 
+
+// SignUp page component with FirebaseContext component to pass down firebase instance directly
 const SignUpPage = () => (
   <div>
     <h1>SignUp</h1>
@@ -30,8 +32,6 @@ class SignUpFormBase extends Component {
   }
 
   onSubmit = event => {
-
-    console.log(this.props.firebase)
     event.preventDefault();
     const { username, email, passwordOne } = this.state;
 
