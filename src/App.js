@@ -1,28 +1,29 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+import Navigation from "./components/Navigation/Navigation";
+import SignIn from './components/SignIn/SignIn';
+import SignUp from "./components/SignUp/SignUp";
+import PasswordForget from "./components/PasswordForget/PasswordForget";
+import Account from "./components/Account/Account"
+import Admin from "./components/Admin/Admin";
+import Home from "./components/Home/Home";
+
+import * as ROUTES from './constants/routes';
+
+const App = () => (
+  <Router>
+    <div>
+      <Navigation />
+      <Route exact path={'/'} component={SignIn}/>
+      <Route path={ROUTES.SIGN_IN} component={SignIn}/>
+      <Route path={ROUTES.SIGN_UP} component={SignUp}/>
+      <Route path={ROUTES.PASSWORD_FORGET} component={PasswordForget}/>
+      <Route path={ROUTES.ACCOUNT} component={Account}/>
+      <Route path={ROUTES.ADMIN} component={Admin}/>
+      <Route path={ROUTES.HOME} component={Home}/>
+    </div>
+  </Router>
+);
 
 export default App;
