@@ -1,4 +1,4 @@
-import { app } from "firebase";
+import firebase from "firebase";
 
 var devConfig = {
   apiKey: process.env.REACT_APP_DEV_API_KEY,
@@ -24,7 +24,7 @@ const config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
 // Firebase class can be instantiated once and then passed to multiple components
 class Firebase {
   constructor() {
-    app.initializeApp(config);
+    firebase.initializeApp(config);
   }
 }
 
