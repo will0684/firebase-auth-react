@@ -24,24 +24,28 @@ const config = process.env.NODE_ENV === "production" ? prodConfig : devConfig;
 // Firebase class can be instantiated once and then passed to multiple components
 class Firebase {
   constructor() {
+    // Initialize firebase app with configuration
     firebase.initializeApp(config);
     // Get the auth instance
     this.auth = firebase.auth();
-    // Auth User "API"/Interface
-    doCreateUserWithEmailAndPassword = (email, password) => {
-      this.auth.createUserWithEmailAndPassword(email, password);
-    }
-
-    doSignInWithEmailAndPassword = (email, password) => {
-      this.auth.signInWithEmailAndPassword(email, password);
-    }
-
-    doSignOut = () => this.auth.signOut();
-
-    doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
-
-    doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
   }
+
+  // Auth User "API"/Interface
+  doCreateUserWithEmailAndPassword = (email, password) => {
+    console.log(email)
+    console.log(password)
+    return this.auth.createUserWithEmailAndPassword(email, password)
+  };
+
+  doSignInWithEmailAndPassword = (email, password) => {
+    return this.auth.signInWithEmailAndPassword(email, password);
+  };
+
+  doSignOut = () => this.auth.signOut();
+
+  doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
+
+  doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
 }
 
 export default Firebase;
