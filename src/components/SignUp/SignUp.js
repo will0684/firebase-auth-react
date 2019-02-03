@@ -34,7 +34,7 @@ class SignUpFormBase extends Component {
   onSubmit = event => {
     event.preventDefault();
     const { username, email, passwordOne } = this.state;
-
+      
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
       .then(authUser => {
@@ -114,3 +114,4 @@ const SignUpForm = withRouter(SignUpFormBase);
 export default SignUpPage;
 
 export { SignUpForm, SignUpLink };
+

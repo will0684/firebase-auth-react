@@ -4,25 +4,24 @@ import * as ROUTES from '../../constants/routes';
 import { withFirebase } from '../Firebase';
 
 // SignUp page component with FirebaseContext component to pass down firebase instance directly
-const SignInPage = () => (
+const SignUpPage = () => (
   <div>
-    <h1>Sign In</h1>
-    <SignInForm />  
-    <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
+    <h1>SignUp</h1>
+    <SignUpForm />
   </div>
 );
 
 // Component state variable used to reset state after succesful submit
 const INITIAL_STATE = {
+username: '',
   email: '',
   password: '',
+  'confirm password': '',
   error: null
 };
 
 // The SignUpForm component is the only class-component because it must be able to track form state in local state
-class SignInFormBase extends Component {
+class SignUpFormBase extends Component {
   constructor(props) {
     super(props);
     this.state = { ...INITIAL_STATE }
@@ -34,7 +33,7 @@ class SignInFormBase extends Component {
       console.log(c)
       
     this.props.firebase
-      .doSignInWithEmailAndPassword(c.email, c.password)
+      .doCreateUserWithEmailAndPassword(c.email, c.password)
       .then(authUser => {
         this.setState({ ...INITIAL_STATE });
         this.props.history.push(ROUTES.HOME)
@@ -53,8 +52,10 @@ class SignInFormBase extends Component {
       let c = this.state;
 
     const isInvalid = (
+    c.password == c['confirm password'] &&
     c.password &&
-    c.email);
+    c.email &&
+    c.username);
 
     return (
       <form onSubmit={this.onSubmit}>
@@ -69,7 +70,7 @@ class SignInFormBase extends Component {
         />  )
     ))
         }
-        <button disabled={!isInvalid} type="submit">Sign In</button>
+        <button disabled={!isInvalid} type="submit">Sign Up</button>
 
         {c.error && <p>{c.error.message}</p>}
       </form>
@@ -77,8 +78,8 @@ class SignInFormBase extends Component {
   }
 }
 
-const SignInForm = withRouter(withFirebase(SignInFormBase));
+const SignUpForm = withRouter(withFirebase(SignUpFormBase));
 
-export default SignInPage;
+export default SignUpPage;
 
-export { SignInForm };
+export { SignUpForm };

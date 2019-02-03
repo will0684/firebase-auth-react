@@ -9,3 +9,7 @@ const PasswordChange = () => {
 }
 
 export default PasswordChange
+
+// From Tutorial
+//doPasswordUpdate = password =>
+//    this.auth.currentUser.updatePassword(password);
