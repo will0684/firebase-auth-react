@@ -30,7 +30,6 @@ class SignUpFormBase extends Component {
   onSubmit = event => {
     event.preventDefault();
     let c = this.state;
-      console.log(c)
       
     this.props.firebase
       .doCreateUserWithEmailAndPassword(c.email, c.password)
@@ -65,7 +64,7 @@ class SignUpFormBase extends Component {
           name={InputPrompt}
           value={c[InputPrompt]}
           onChange={this.onChange}
-          type="text"
+          type={InputPrompt.includes("password")? ("password"): ("text")}
           placeholder={InputPrompt} 
         />  )
     ))
