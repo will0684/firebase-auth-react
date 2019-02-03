@@ -3,6 +3,7 @@ import {withRouter} from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
 import { FirebaseContext } from '../Firebase';
 
+// Render SignInForm with firebase context
 const SignInPage = () => (
     <div>
       SignIn
@@ -12,6 +13,7 @@ const SignInPage = () => (
     </div>
 );
 
+// Used to reset state after user signs in
 const INITIAL_STATE = {
   email: '',
   password: '',
@@ -39,6 +41,7 @@ class SignInFormBase extends Component {
     })
   };
 
+  // Update state with current text field values
   onChange = event => {
     this.setState({
       [event.target.name] : event.target.value
@@ -80,4 +83,4 @@ const SignInForm = withRouter(SignInFormBase);
 
 export default SignInPage;
 
-//export { SignInForm };
+export { SignInForm };

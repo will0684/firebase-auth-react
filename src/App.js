@@ -20,6 +20,7 @@ class App extends Component {
     };
   }
 
+  // Listen for auth events (sign in, sign out) then add/remove authUser object in state
   componentDidMount() {
     this.listener = this.props.firebase.auth.onAuthStateChanged(
       authUser => {
@@ -32,6 +33,7 @@ class App extends Component {
     )
   }
 
+  // Destroy listener if component unmounts
   componentWillUnmount() {
     this.listener();
   }

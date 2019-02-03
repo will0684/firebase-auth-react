@@ -2,23 +2,11 @@ import React, { Component } from 'react'
 import { FirebaseContext } from '../Firebase';
 
 
-
-const SignOutButton = () => {
-  return (
-    <FirebaseContext.Consumer>
-      {
-        (firebase) => (
-          <SignOutButtonTest firebase={firebase} />
-        )
-      }
-    </FirebaseContext.Consumer>
-  )
-}
-
-class SignOutButtonTest extends Component {
+class SignOutButton extends Component {
   constructor(props){
     super(props);
   }
+
   onClick = () => {
     this.props.firebase.doSignOut()
     .then(()=>{
@@ -37,7 +25,5 @@ class SignOutButtonTest extends Component {
     );
   }
 }
-
-
 
 export default SignOutButton
