@@ -3,10 +3,18 @@ import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import SignOutButton from "../SignOut/SignOut";
 import { FirebaseContext } from "../Firebase";
+import * as ROLES from "../../constants/roles";
+import { AuthUserContext } from '../Session';
 
 // Determine navigation items to show if user logged in or not
-const Navigation = ({ authUser }) => (
-<div>{authUser ? <NavigationAuth /> : <NavigationNonAuth />}</div>
+const Navigation = () => (
+<div>
+  <AuthUserContext.Consumer>
+    {
+      (authUser) => authUser ? <NavigationAuth /> : <NavigationNonAuth />
+    }
+  </AuthUserContext.Consumer>
+</div>
 )
 
 const NavigationAuth = () => {
