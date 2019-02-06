@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { FirebaseContext } from '../Firebase';
+import { withFirebase } from '../Firebase';
 
 
 class SignOutButton extends Component {
@@ -26,4 +26,4 @@ class SignOutButton extends Component {
   }
 }
 
-export default SignOutButton
+export default withFirebase(SignOutButton);

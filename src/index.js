@@ -3,15 +3,13 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-import Firebase, { FirebaseContext } from "./components/Firebase/index";
+import Firebase, { FirebaseContext } from "./components/Firebase";
 
 ReactDOM.render(
   // FirebaseContext.Provider component instantiates a singleton (single instance) of Firebase and passes down
   // the instance to children components who can call the same instance using the Firebase.Consumer component
   <FirebaseContext.Provider value={new Firebase()}>
-    <FirebaseContext.Consumer>
-      {firebase => <App firebase={firebase}/>}
-    </FirebaseContext.Consumer>
+    <App/>
   </FirebaseContext.Provider>,
   document.getElementById("root")
 );

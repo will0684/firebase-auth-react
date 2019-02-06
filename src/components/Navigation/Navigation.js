@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import * as ROUTES from "../../constants/routes";
 import SignOutButton from "../SignOut/SignOut";
-import { FirebaseContext } from "../Firebase";
 import * as ROLES from "../../constants/roles";
 import { AuthUserContext } from '../Session';
 
@@ -31,9 +30,7 @@ const NavigationAuth = () => {
           <Link to={ROUTES.ADMIN}>Admin</Link>
         </li>
         <li>
-          <FirebaseContext.Consumer>
-            {firebase => <SignOutButton firebase={firebase}/>}
-          </FirebaseContext.Consumer>
+          <SignOutButton/>
         </li>
       </ul>
     </div>

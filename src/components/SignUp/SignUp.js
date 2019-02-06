@@ -2,16 +2,14 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
-import { FirebaseContext } from '../Firebase';
+import { FirebaseContext, withFirebase } from '../Firebase';
 
 
 // SignUp page component with FirebaseContext component to pass down firebase instance directly
 const SignUpPage = () => (
   <div>
     <h1>SignUp</h1>
-    <FirebaseContext.Consumer>
-      {firebase => <SignUpForm firebase={firebase}/>}
-    </FirebaseContext.Consumer>
+    <SignUpForm/>
   </div>
 );
 
@@ -109,7 +107,7 @@ const SignUpLink = () => (
   </p>
 );
 
-const SignUpForm = withRouter(SignUpFormBase);
+const SignUpForm = withFirebase(withRouter(SignUpFormBase));
 
 export default SignUpPage;
 

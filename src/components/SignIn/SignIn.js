@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-import { FirebaseContext } from '../Firebase';
+import { FirebaseContext, withFirebase } from '../Firebase';
 
 // Render SignInForm with firebase context
 const SignInPage = () => (
     <div>
       SignIn
-      <FirebaseContext.Consumer>
-        {firebase => <SignInForm firebase={firebase}/>}
-      </FirebaseContext.Consumer>
+      <SignInForm/>
     </div>
 );
 
@@ -28,7 +26,7 @@ class SignInFormBase extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-
+    
     const { email, password } = this.state;
     this.props.firebase.doSignInWithEmailAndPassword(email, password)
     .then((msg) => {
@@ -79,7 +77,7 @@ class SignInFormBase extends Component {
   }
 }
 
-const SignInForm = withRouter(SignInFormBase);
+const SignInForm = withFirebase(withRouter(SignInFormBase));
 
 export default SignInPage;
 
