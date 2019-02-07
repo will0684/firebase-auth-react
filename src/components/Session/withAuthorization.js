@@ -5,6 +5,11 @@ import { withFirebase } from '../Firebase';
 import * as ROUTES from '../../constants/routes';
 import AuthUserContext from './context';
 
+// HOC protects pages from being accessed if user is not logged in
+
+// Param: Condition -> A function that takes authenticated user object. Determines if they get access to a page. Returns boolean.
+// Param: Component -> Component to render if user is authorized to view it
+
 const withAuthorization = condition => Component => {
     class WithAuthorization extends React.Component {
         componentDidMount() {
@@ -12,7 +17,6 @@ const withAuthorization = condition => Component => {
                 authUser => {
                     console.log(condition(authUser));
                     if (!condition(authUser)) {
-                        //FIX MEEEE
                         this.props.history.push(ROUTES.SIGN_IN);
                     }
                 }

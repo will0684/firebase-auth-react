@@ -10,6 +10,7 @@ const Admin = () => {
   )
 }
 
+//Condition: Authenticated user must not be null
 const condition = authUser => !!authUser;
 
 export default withAuthorization(condition)(Admin);

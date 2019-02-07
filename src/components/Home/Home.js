@@ -9,6 +9,7 @@ const Home = () => {
   )
 }
 
+// Condition: authenticated user can't be null
 const condition = authUser => !!authUser;
 
 export default withAuthorization(condition)(Home);

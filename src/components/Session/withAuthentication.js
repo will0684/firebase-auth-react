@@ -3,7 +3,8 @@ import React from 'react';
 import AuthUserContext from './context';
 import {withFirebase} from '../Firebase';
 
-
+// HOC provides authenticated user object to App component
+// Rest of the app can now access it through AuthUserContext.Consumer
 const withAuthentication = Component => {
     class WithAuthentication extends React.Component {
         constructor(props){
@@ -30,6 +31,7 @@ const withAuthentication = Component => {
         componentWillUnmount() {
             this.listener();
         }
+
         render() {
             return(
                 <AuthUserContext.Provider value={this.state.authUser}>

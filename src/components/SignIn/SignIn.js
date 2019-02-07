@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import * as ROUTES from '../../constants/routes';
-import { FirebaseContext, withFirebase } from '../Firebase';
+import { withFirebase } from '../Firebase';
 
-// Render SignInForm with firebase context
 const SignInPage = () => (
     <div>
       SignIn
@@ -77,6 +76,7 @@ class SignInFormBase extends Component {
   }
 }
 
+// SignInForm with firebase and react-router context
 const SignInForm = withFirebase(withRouter(SignInFormBase));
 
 export default SignInPage;
