@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { withAuthorization } from '../Session'
+
 const Admin = () => {
   return (
     <div>
@@ -8,4 +10,7 @@ const Admin = () => {
   )
 }
 
-export default Admin
+//Condition: Authenticated user must not be null
+const condition = authUser => !!authUser;
+
+export default withAuthorization(condition)(Admin);

@@ -1,17 +1,16 @@
 import React, { Component } from 'react';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
-import { FirebaseContext } from '../Firebase';
+import { withFirebase } from '../Firebase';
+import { withAuthorization } from '../Session';
 
 
 // SignUp page component with FirebaseContext component to pass down firebase instance directly
 const SignUpPage = () => (
   <div>
     <h1>SignUp</h1>
-    <FirebaseContext.Consumer>
-      {firebase => <SignUpForm firebase={firebase}/>}
-    </FirebaseContext.Consumer>
+    <SignUpForm/>
   </div>
 );
 
@@ -103,14 +102,9 @@ class SignUpFormBase extends Component {
   }
 }
 
-const SignUpLink = () => (
-  <p>
-    Don't have an account? <Link to={ROUTES.SIGN_UP}>Sign Up</Link>
-  </p>
-);
+const SignUpForm = withFirebase(withRouter(SignUpFormBase));
 
-const SignUpForm = withRouter(SignUpFormBase);
+//Condition: authenticated user must not be null
+const condition = (authUser) => !!authUser;
 
-export default SignUpPage;
-
-export { SignUpForm, SignUpLink };
+export default withAuthorization(condition)(SignUpPage);
