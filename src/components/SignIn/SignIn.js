@@ -31,7 +31,6 @@ class SignInFormBase extends Component {
     .then((msg) => {
       this.setState({ ...INITIAL_STATE });
       this.props.history.push(ROUTES.HOME);
-      console.log(msg);
     })
     .catch((error)=>{
       this.setState({error});
@@ -81,4 +80,4 @@ const SignInForm = withFirebase(withRouter(SignInFormBase));
 
 export default SignInPage;
 
-export { SignInForm };
+//export { SignInForm };

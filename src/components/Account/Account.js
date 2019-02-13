@@ -10,6 +10,7 @@ const Account = () => {
   )
 }
 
+// Condition: Authenticated user can't be null
 const condition = authUser => !!authUser;
 
 export default withAuthorization(condition)(Account);

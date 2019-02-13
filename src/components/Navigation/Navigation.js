@@ -15,6 +15,7 @@ const Navigation = () => (
 </div>
 )
 
+// User is signed in
 const NavigationAuth = () => {
   return (
     <div>
@@ -39,6 +40,7 @@ const NavigationAuth = () => {
   );
 };
 
+// User not signed in
 const NavigationNonAuth = () => {
   return (
     <div>

@@ -7,15 +7,16 @@ import AuthUserContext from './context';
 
 // HOC protects pages from being accessed if user is not logged in
 
-// Param: Condition -> A function that takes authenticated user object. Determines if they get access to a page. Returns boolean.
+// Param: condition -> A function that takes current authenticated user object. Determines if they get access to a page. Returns boolean.
 // Param: Component -> Component to render if user is authorized to view it
 
 const withAuthorization = condition => Component => {
     class WithAuthorization extends React.Component {
         componentDidMount() {
+
+            // Redirect user if they are no longer authorized to view this page
             this.listener = this.props.firebase.auth.onAuthStateChanged(
                 authUser => {
-                    console.log(condition(authUser));
                     if (!condition(authUser)) {
                         this.props.history.push(ROUTES.SIGN_IN);
                     }
@@ -28,6 +29,7 @@ const withAuthorization = condition => Component => {
         }
 
         render() {
+            // Only render component if user is authorized to view it
             return(
                 <AuthUserContext.Consumer>
                     {authUser => 
