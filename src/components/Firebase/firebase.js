@@ -28,6 +28,8 @@ class Firebase {
     firebase.initializeApp(config);
     // Get the auth instance
     this.auth = firebase.auth();
+    // Get firestore instance
+    this.db = firebase.firestore();
   }
 
   // Auth User "API"/Interface
@@ -46,6 +48,12 @@ class Firebase {
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
+  // User API
+
+  user = uid => this.db.collection('users').doc(uid);
+  users = () => this.db.collection('users');
+
 }
 
 export default Firebase;
