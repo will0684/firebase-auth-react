@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import * as ROUTES from '../../constants/routes';
+import * as ROLES from '../../constants/roles';
+
 import { withFirebase } from '../Firebase';
 import { withAuthorization } from '../Session';
 
@@ -20,6 +22,7 @@ const INITIAL_STATE = {
   email: '',
   passwordOne: '',
   passwordTwo: '',
+  isAdmin: false,
   error: null,
 };
 
@@ -32,7 +35,15 @@ class SignUpFormBase extends Component {
 
   onSubmit = event => {
     event.preventDefault();
-    const { username, email, passwordOne } = this.state;
+    const { username, email, passwordOne, isAdmin } = this.state;
+    const roles = [];
+
+    if (isAdmin) {
+      roles.push(ROLES.ADMIN);
+    }
+    else {
+      roles.push(ROLES.USER);
+    }
 
     this.props.firebase
       .doCreateUserWithEmailAndPassword(email, passwordOne)
@@ -42,7 +53,8 @@ class SignUpFormBase extends Component {
         .user(authUser.user.uid)
         .set({
           email,
-          username
+          username,
+          roles
         });
       })
       .then(() => {
@@ -57,6 +69,9 @@ class SignUpFormBase extends Component {
   onChange = event => {
     this.setState({ [event.target.name]: event.target.value });
   };
+  onCheckboxChange = event => {
+    this.setState({ [event.target.name]: event.target.checked });
+  }
 
   render() {
     const {
@@ -64,6 +79,7 @@ class SignUpFormBase extends Component {
       email,
       passwordOne,
       passwordTwo,
+      isAdmin,
       error,
     } = this.state;
 
@@ -103,6 +119,15 @@ class SignUpFormBase extends Component {
           type="password"
           placeholder="Confirm Password"
         />
+        <label>
+          Admin:
+          <input
+            name="isAdmin"
+            type="checkbox"
+            checked={isAdmin}
+            onChange={this.onCheckboxChange}
+          />
+        </label>
         <button disabled={isInvalid} type="submit">Sign Up</button>
 
         {error && <p>{error.message}</p>}
