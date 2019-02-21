@@ -17,7 +17,35 @@ const withAuthorization = condition => Component => {
             // Redirect user if they are no longer authorized to view this page
             this.listener = this.props.firebase.auth.onAuthStateChanged(
                 authUser => {
-                    if (!condition(authUser)) {
+                    if (authUser){
+                        this.props.firebase.user(authUser.uid).get()
+                        .then((doc) => {
+                            const dbUser = doc.data();
+
+                            // Default roles
+                            if (!dbUser.roles) {
+                                dbUser.roles = [];
+                            }
+                            
+                            // Merge auth user with firestore user
+                            authUser = {
+                                uid: authUser.uid,
+                                email: authUser.email,
+                                ...dbUser
+                            };
+                            console.log("Auth User", authUser);
+                            
+                            // Redirect user if they don't meet condition
+                            if (!condition(authUser)) {
+                                this.props.history.push(ROUTES.SIGN_IN);
+                            }
+
+                        })
+                        .catch((error)=>{
+                            console.log(error);
+                        })
+                    }
+                    else{
                         this.props.history.push(ROUTES.SIGN_IN);
                     }
                 }

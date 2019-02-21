@@ -19,7 +19,31 @@ const withAuthentication = Component => {
             this.listener = this.props.firebase.auth.onAuthStateChanged(
             authUser => {
                 if (authUser) {
-                this.setState({ authUser });
+
+                    this.props.firebase.user(authUser.uid).get()
+                    .then((doc)=> {
+                        const dbUser = doc.data();
+
+                        // Default roles
+                        if (!dbUser.roles){
+                            dbUser.roles = [];
+                        }
+
+                        // Merge auth user and database user
+                        authUser = {
+                            uid: authUser.uid,
+                            email: authUser.email,
+                            ...dbUser
+                        }
+                        console.log(authUser);
+
+                        this.setState({ authUser });
+
+                    })
+                    .catch((error)=>{
+                        console.log(error);
+                    })
+
                 }else {
                 this.setState({ authUser: null});
                 }
