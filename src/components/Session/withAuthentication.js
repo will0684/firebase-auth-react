@@ -16,38 +16,15 @@ const withAuthentication = Component => {
 
         // Listen for auth events (sign in, sign out) then add/remove authUser object in state
         componentDidMount() {
-            this.listener = this.props.firebase.auth.onAuthStateChanged(
-            authUser => {
-                if (authUser) {
-
-                    this.props.firebase.user(authUser.uid).get()
-                    .then((doc)=> {
-                        const dbUser = doc.data();
-
-                        // Default roles
-                        if (!dbUser.roles){
-                            dbUser.roles = [];
-                        }
-
-                        // Merge auth user and database user
-                        authUser = {
-                            uid: authUser.uid,
-                            email: authUser.email,
-                            ...dbUser
-                        }
-                        console.log(authUser);
-
-                        this.setState({ authUser });
-
-                    })
-                    .catch((error)=>{
-                        console.log(error);
-                    })
-
-                }else {
-                this.setState({ authUser: null});
+            this.listener = this.props.firebase.onAuthUserListener(
+                // Callback if user object exists
+                authUser => {
+                    this.setState({ authUser });
+                },
+                // Callback if user object null
+                () => {
+                    this.setState({ authUser: null});
                 }
-            }
             )
         }
 

@@ -1,6 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-import { withAuthorization } from '../Session'
+import { withAuthorization } from '../Session';
+import * as ROLES from '../../constants/roles';
 
 const Admin = () => {
   return (
@@ -11,6 +12,7 @@ const Admin = () => {
 }
 
 //Condition: Authenticated user must not be null
-const condition = authUser => !!authUser;
+const condition = authUser => 
+  !!authUser && authUser.roles.includes(ROLES.ADMIN);
 
 export default withAuthorization(condition)(Admin);

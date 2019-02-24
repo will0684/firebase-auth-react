@@ -139,6 +139,7 @@ class SignUpFormBase extends Component {
 const SignUpForm = withFirebase(withRouter(SignUpFormBase));
 
 //Condition: authenticated user must not be null
-const condition = (authUser) => !!authUser;
+const condition = (authUser) => 
+  !!authUser && authUser.roles.includes(ROLES.ADMIN);
 
 export default withAuthorization(condition)(SignUpPage);
