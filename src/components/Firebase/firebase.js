@@ -28,6 +28,8 @@ class Firebase {
     firebase.initializeApp(config);
     // Get the auth instance
     this.auth = firebase.auth();
+    // Get firestore instance
+    this.db = firebase.firestore();
   }
 
   // Auth User "API"/Interface
@@ -46,6 +48,45 @@ class Firebase {
   doPasswordReset = email => this.auth.sendPasswordResetEmail(email);
 
   doPasswordUpdate = password => this.auth.currentUser.updatePassword(password);
+
+  // Merge auth and database user objects 
+  // Params: callback functions to run if user is signed in || not signed in
+  onAuthUserListener = (next, fallback) => 
+    this.auth.onAuthStateChanged(authUser => {
+      if (authUser){
+        this.user(authUser.uid).get()
+        .then((doc) => {
+            const dbUser = doc.data();
+
+            // Default roles
+            if (!dbUser.roles) {
+                dbUser.roles = [];
+            }
+            
+            // Merge auth user with firestore user
+            authUser = {
+                uid: authUser.uid,
+                email: authUser.email,
+                ...dbUser
+            };
+            console.log("onAuthUserListener:", authUser);
+            next(authUser);
+        })
+        .catch((error)=>{
+            console.log(error);
+        })
+    }
+    else{
+      fallback();
+    }
+    });
+  
+
+  // User API
+
+  user = uid => this.db.collection('users').doc(uid);
+  users = () => this.db.collection('users');
+
 }
 
 export default Firebase;

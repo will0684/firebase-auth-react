@@ -16,14 +16,15 @@ const withAuthentication = Component => {
 
         // Listen for auth events (sign in, sign out) then add/remove authUser object in state
         componentDidMount() {
-            this.listener = this.props.firebase.auth.onAuthStateChanged(
-            authUser => {
-                if (authUser) {
-                this.setState({ authUser });
-                }else {
-                this.setState({ authUser: null});
+            this.listener = this.props.firebase.onAuthUserListener(
+                // Callback if user object exists
+                authUser => {
+                    this.setState({ authUser });
+                },
+                // Callback if user object null
+                () => {
+                    this.setState({ authUser: null});
                 }
-            }
             )
         }
 

@@ -15,12 +15,15 @@ const withAuthorization = condition => Component => {
         componentDidMount() {
 
             // Redirect user if they are no longer authorized to view this page
-            this.listener = this.props.firebase.auth.onAuthStateChanged(
+            this.listener = this.props.firebase.onAuthUserListener(
+                // Callback if user object exists
                 authUser => {
                     if (!condition(authUser)) {
                         this.props.history.push(ROUTES.SIGN_IN);
                     }
-                }
+                },
+                // Callback if user object null
+                () => this.props.history.push(ROUTES.SIGN_IN)
             );
         }
 
